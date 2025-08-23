@@ -3,6 +3,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     Rigidbody2D rb;
+    Animator anim;
     bool isGrounded;
     float x;
 
@@ -14,11 +15,14 @@ public class Player : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        anim.SetFloat("xSpeed", Mathf.Abs(x));
+        anim.SetBool("isGrounded", isGrounded);
+
         x = Input.GetAxis("Horizontal") * horizontalSpeed;
         
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
@@ -46,9 +50,5 @@ public class Player : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.black;
-        Vector2 to = (Vector2)transform.position + new Vector2(0, downDistance);
-
-        Gizmos.DrawLine(transform.position, to);
     }
 }
