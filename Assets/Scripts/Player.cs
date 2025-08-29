@@ -1,5 +1,8 @@
 using UnityEngine;
 
+using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
+
 public class Player : MonoBehaviour
 {
     Rigidbody2D rb;
@@ -21,10 +24,18 @@ public class Player : MonoBehaviour
     void Update()
     {
         anim.SetFloat("xSpeed", Mathf.Abs(x));
+        anim.SetFloat("ySpeed", rb.linearVelocityY);
         anim.SetBool("isGrounded", isGrounded);
 
         x = Input.GetAxis("Horizontal") * horizontalSpeed;
-        
+
+        if (x > 0)
+            transform.eulerAngles = new Vector3(0, 0, 0);
+        else if (x < 0)
+            transform.eulerAngles = new Vector3(0, 180, 0);
+
+
+
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.AddForce(Vector2.up * verticalSpeed, ForceMode2D.Impulse);
