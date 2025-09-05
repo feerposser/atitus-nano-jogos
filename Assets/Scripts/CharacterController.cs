@@ -17,6 +17,7 @@ public class CharacterController : MonoBehaviour
 
     Vector2 fallVectorGravity;
     Rigidbody2D rb;
+    Animator anim;
 
     [Header("Grounded")]
     [SerializeField] LayerMask groundLayer;
@@ -62,6 +63,7 @@ public class CharacterController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         fallVectorGravity = new Vector2(rb.linearVelocity.x, -Physics2D.gravity.y);
     }
 
@@ -74,6 +76,8 @@ public class CharacterController : MonoBehaviour
         ComputeWallSliding();
 
         ComputeDash();
+
+        UpdateAnimations();
     }
 
     void FixedUpdate()
@@ -90,6 +94,18 @@ public class CharacterController : MonoBehaviour
         ExecuteWallSliding();
 
         ExecuteDash();
+    }
+
+    private void UpdateAnimations()
+    {
+        anim.SetFloat("xSpeed", Mathf.Abs(rb.linearVelocity.x));
+        anim.SetFloat("ySpeed", rb.linearVelocityY);
+        anim.SetBool("isGrounded", isGrounded);
+
+        if (move > 0)
+            transform.eulerAngles = new Vector3(0, 0, 0);
+        else if (move < 0)
+            transform.eulerAngles = new Vector3(0, 180, 0);
     }
 
     private void IsGrounded()
