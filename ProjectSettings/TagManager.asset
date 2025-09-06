@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - platform
   layers:
   - Default
   - TransparentFX
@@ -14,7 +15,7 @@ TagManager:
   - Enemy-Hitable
   - Interactable
   - Enemy
-  - 
+  - Player
   - 
   - 
   - 
